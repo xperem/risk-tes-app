@@ -1,0 +1,48 @@
+/* src/styles/authStyles.css */
+
+.auth-container {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.auth-text-field input {
+    color: #ffffff;
+}
+
+.auth-text-field label {
+    color: #aaaaaa;
+}
+
+.auth-text-field .MuiInput-underline:before {
+    border-bottom: 1px solid #555;
+}
+
+.auth-text-field .MuiInput-underline:hover:not(.Mui-disabled):before {
+    border-bottom: 1px solid #ffffff;
+}
+
+.auth-text-field .MuiInput-underline:after {
+    border-bottom: 2px solid #2979ff;
+}
+
+.auth-button {
+    margin-top: 20px;
+    background-color: #2979ff;
+    color: #ffffff;
+}
+
+.auth-button:hover {
+    background-color: #1565c0;
+}
+
+.auth-link {
+    color: #2979ff;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
