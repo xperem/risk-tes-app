@@ -1,9 +1,9 @@
 // src/components/LoginPage.tsx
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../api/supabaseClient';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import '../styles/authStyles.css';
+import '../../styles/authStyles.css';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');

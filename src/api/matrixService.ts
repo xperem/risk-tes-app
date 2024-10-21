@@ -1,5 +1,5 @@
 // src/api/matrixService.ts
-import { supabase } from '../supabaseClient';
+import { supabase } from './supabaseClient';
 
 export interface MatrixRow {
     id: string;

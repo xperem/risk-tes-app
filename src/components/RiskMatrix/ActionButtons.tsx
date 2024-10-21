@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Box } from '@mui/material';
+import exportPdf from './ExportPdfButton'; // Importer la fonction
 
 interface ActionButtonsProps {
     handleAddRow: () => void;
@@ -14,7 +15,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ handleAddRow, handleSaveC
             <Button variant="contained" onClick={handleAddRow} sx={{ backgroundColor: '#1976d2' }}>
                 Add Row
             </Button>
-            <Button variant="contained" sx={{ backgroundColor: '#1976d2' }}>
+            <Button variant="contained" onClick={() => exportPdf(targetId)} sx={{ backgroundColor: '#1976d2' }}>
                 Export as PDF
             </Button>
             <Button variant="contained" onClick={handleSaveChanges} sx={{ backgroundColor: '#1976d2' }}>

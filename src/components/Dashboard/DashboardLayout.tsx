@@ -4,7 +4,7 @@ import { Outlet, Link as RouterLink, useNavigate, useLocation } from 'react-rout
 import { Box, CssBaseline, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, AppBar, Button } from '@mui/material';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../api/supabaseClient';
 
 const drawerWidth = 240;
 

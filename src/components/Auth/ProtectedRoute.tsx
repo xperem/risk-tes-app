@@ -1,6 +1,6 @@
 // src/components/ProtectedRoute.tsx
 import React, { ReactNode, useEffect, useState } from 'react';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../api/supabaseClient';
 import { Navigate } from 'react-router-dom';
 
 interface ProtectedRouteProps {
