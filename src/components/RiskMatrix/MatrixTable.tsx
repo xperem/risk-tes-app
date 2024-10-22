@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box } from '@mui/material';
 import MatrixRow from './MatrixRow';
 import { MatrixRow as MatrixRowType } from '../../api/matrixService';
 
@@ -11,8 +11,23 @@ interface MatrixTableProps {
 
 const MatrixTable: React.FC<MatrixTableProps> = ({ rows, handleUpdateRow, handleDeleteRow }) => {
     return (
-        <TableContainer component={Paper} sx={{ backgroundColor: 'transparent', boxShadow: 'none', paddingRight: 2 }}>
-            <Table id="matrix-table" sx={{ minWidth: 650, backgroundColor: '#2e2e38' }}>
+        <TableContainer
+            component={Box} // Remplacer Paper par Box
+            sx={{
+                backgroundColor: 'transparent',
+                boxShadow: 'none', // Supprimer l'ombre
+                paddingRight: 2,
+                border: 'none', // Supprimer toute bordure si présente
+            }}
+        >
+            <Table
+                id="matrix-table"
+                sx={{
+                    minWidth: 650,
+                    backgroundColor: '#2e2e38',
+                    border: 'none', // Assurez-vous qu'il n'y a pas de bordure autour de la table
+                }}
+            >
                 <TableHead>
                     <TableRow>
                         {/* Les cellules d'en-tête */}

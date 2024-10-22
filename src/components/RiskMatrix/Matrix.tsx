@@ -5,7 +5,11 @@ import StatisticsModal from './StatisticsModal';
 import { fetchMatrixRows, addMatrixRow, updateMatrixRow, deleteMatrixRow, MatrixRow as MatrixRowType } from '../../api/matrixService';
 import { Box, Typography } from '@mui/material';
 
-const Matrix: React.FC = () => {
+interface MatrixProps {
+    productId: string;
+}
+
+const Matrix: React.FC<MatrixProps> = ({ productId }) => {
     const [rows, setRows] = useState<MatrixRowType[]>([]);
     const [initialRows, setInitialRows] = useState<MatrixRowType[]>([]);
     const [loading, setLoading] = useState(true);
@@ -14,13 +18,13 @@ const Matrix: React.FC = () => {
     useEffect(() => {
         const getRows = async () => {
             setLoading(true);
-            const fetchedRows = await fetchMatrixRows();
+            const fetchedRows = await fetchMatrixRows(productId);
             setRows(fetchedRows);
             setInitialRows(fetchedRows);
             setLoading(false);
         };
         getRows();
-    }, []);
+    }, [productId]);
 
     const handleAddRow = () => {
         const newRow: Partial<MatrixRowType> = {
@@ -34,6 +38,7 @@ const Matrix: React.FC = () => {
             residual_probability: 1,
             residual_severity: 1,
             acceptability: 'Yes',
+            product_id: productId, // Associer la ligne au produit actuel
         };
 
         setRows((prevRows) => [
@@ -55,11 +60,11 @@ const Matrix: React.FC = () => {
     const handleSaveChanges = async () => {
         for (const row of rows) {
             if (row.id.startsWith('temp-')) {
-                // If the row is new, add it to Supabase
+                // Si la ligne est nouvelle, l'ajouter à Supabase
                 const { id, ...newRowData } = row;
-                await addMatrixRow(newRowData);
+                await addMatrixRow(newRowData, productId); // Appel correct avec 2 arguments
             } else {
-                // If the row has been modified, update it
+                // Si la ligne a été modifiée, la mettre à jour
                 const initialRow = initialRows.find((r) => r.id === row.id);
                 if (JSON.stringify(initialRow) !== JSON.stringify(row)) {
                     const { id, ...updatedRowData } = row;
@@ -67,19 +72,20 @@ const Matrix: React.FC = () => {
                 }
             }
         }
-
-        // Delete rows that were removed locally
+    
+        // Supprimer les lignes qui ont été retirées localement
         for (const initialRow of initialRows) {
             if (!rows.find((row) => row.id === initialRow.id)) {
                 await deleteMatrixRow(initialRow.id);
             }
         }
-
-        // Refresh data from Supabase after saving
-        const fetchedRows = await fetchMatrixRows();
+    
+        // Rafraîchir les données de Supabase après enregistrement
+        const fetchedRows = await fetchMatrixRows(productId);
         setRows(fetchedRows);
         setInitialRows(fetchedRows);
     };
+    
 
     const handleOpenStatisticsModal = () => setIsStatisticsModalOpen(true);
     const handleCloseStatisticsModal = () => setIsStatisticsModalOpen(false);
@@ -94,6 +100,7 @@ const Matrix: React.FC = () => {
                 Medical Device Risk Matrix
             </Typography>
             <MatrixTable rows={rows} handleUpdateRow={handleUpdateRow} handleDeleteRow={handleDeleteRow} />
+           
             <ActionButtons
                 handleAddRow={handleAddRow}
                 handleSaveChanges={handleSaveChanges}

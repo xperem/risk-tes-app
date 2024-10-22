@@ -23,6 +23,8 @@ const AppBarComponent: React.FC<AppBarComponentProps> = ({ drawerWidth }) => {
                 return 'Dashboard';
             case '/risk-matrix':
                 return 'Risk Matrix';
+                case '/products':
+                    return 'Products';
             case '/profile':
                 return 'Profile';
             default:

@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient';
 export interface MatrixRow {
     id: string;
     user_id: string;
+    product_id: string;
     danger: string;
     event: string;
     situation: string;
@@ -28,14 +29,15 @@ const getCurrentUser = async () => {
 };
 
 // Récupérer les lignes de la matrice pour l'utilisateur connecté
-export const fetchMatrixRows = async (): Promise<MatrixRow[]> => {
+export const fetchMatrixRows = async (productId: string): Promise<MatrixRow[]> => {
     const user = await getCurrentUser();
     if (!user) return [];
 
     const { data, error } = await supabase
         .from('risk_matrix')
         .select('*')
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .eq('product_id', productId);
 
     if (error) {
         console.error('Error fetching matrix rows:', error);
@@ -46,18 +48,25 @@ export const fetchMatrixRows = async (): Promise<MatrixRow[]> => {
 };
 
 // Ajouter une ligne à la matrice
-export const addMatrixRow = async (row: Partial<MatrixRow>): Promise<void> => {
+export const addMatrixRow = async (row: Partial<MatrixRow>, productId: string): Promise<void> => {
     const user = await getCurrentUser();
     if (!user) return;
 
     const { error } = await supabase
         .from('risk_matrix')
-        .insert([{ ...row, user_id: user.id }]);
+        .insert([
+            {
+                ...row,
+                user_id: user.id,
+                product_id: productId, // Associer la ligne au produit
+            },
+        ]);
 
     if (error) {
         console.error('Error adding matrix row:', error);
     }
 };
+
 
 // Mettre à jour une ligne existante
 export const updateMatrixRow = async (id: string, updates: Partial<MatrixRow>): Promise<void> => {
