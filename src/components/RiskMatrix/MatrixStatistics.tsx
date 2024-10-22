@@ -21,8 +21,7 @@ const MatrixStatistics: React.FC<MatrixStatisticsProps> = ({ rows }) => {
     const redResidualRisks = rows.filter(row => calculateResidualRisk(row.residual_probability, row.residual_severity) > 12).length;
 
     return (
-        <Box sx={{ padding: 2 }}>
-            <Typography variant="h6" gutterBottom>Matrix Statistics</Typography>
+        <Box sx={{ padding: 0 }}>
             <Typography>Total Rows: {totalRows}</Typography>
             <Typography>Unacceptable Risks: {unacceptableRisks}</Typography>
             <Typography>Green Residual Risks: {greenResidualRisks}</Typography>

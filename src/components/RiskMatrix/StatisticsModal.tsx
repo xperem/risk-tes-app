@@ -32,7 +32,7 @@ const StatisticsModal: React.FC<StatisticsModalProps> = ({ isOpen, onClose, rows
                 <MatrixStatistics rows={rows} />
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} sx={{ color: '#4caf50' }}>
+                <Button onClick={onClose} sx={{ color: '#1976d2' }}>
                     Close
                 </Button>
             </DialogActions>
