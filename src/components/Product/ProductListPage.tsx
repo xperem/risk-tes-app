@@ -1,9 +1,11 @@
+// src/components/Product/ProductListPage.tsx
+
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button, Grid, Card, CardActions, CardContent, CardMedia, IconButton } from '@mui/material';
-import { Delete as DeleteIcon } from '@mui/icons-material';
+import { Box, Typography, Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { fetchProducts, deleteProduct } from '../../api/productService';
 import AddProductModal from './AddProductModal';
+import ProductUnitView from './ProductUnitView'; // Importer le nouveau composant
 
 interface Product {
     id: string;
@@ -66,32 +68,13 @@ const ProductListPage: React.FC = () => {
             <Grid container spacing={3}>
                 {products.map((product) => (
                     <Grid item key={product.id} xs={12} sm={6} md={4}>
-                        <Card sx={{ maxWidth: 345, backgroundColor: '#2a2a2a', color: '#ffffff' }}>
-                            <CardMedia
-                                component="img"
-                                height="140"
-                                image="https://via.placeholder.com/345x140" // Placeholder image, replace with real image if available
-                                alt={product.name}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {product.name}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {product.description}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small" onClick={() => handleNavigateToProduct(product.id)}>View Details</Button>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={() => handleDeleteProduct(product.id)}
-                                    sx={{ color: '#d32f2f' }}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </CardActions>
-                        </Card>
+                        <ProductUnitView
+                            id={product.id}
+                            name={product.name}
+                            description={product.description}
+                            onDelete={handleDeleteProduct}
+                            onViewDetails={handleNavigateToProduct}
+                        />
                     </Grid>
                 ))}
             </Grid>

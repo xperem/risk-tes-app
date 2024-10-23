@@ -12,7 +12,7 @@ const SeverityField: React.FC<SeverityFieldProps> = ({ value, setValue }) => {
                 type="range"
                 min="1"
                 max="5"
-                value={value}
+                value={value ?? ''} 
                 onChange={(e) => setValue(Number(e.target.value))}
             />
             <span>{value}</span>

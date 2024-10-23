@@ -30,7 +30,7 @@ const NewRiskField: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <input
                         type="text"
-                        value={value}
+                        value={value ?? ''} 
                         onChange={handleInputChange}
                         placeholder="Enter risk"
                         style={{ flex: 1 }}

@@ -22,7 +22,7 @@ const TextField: React.FC<TextFieldProps> = ({ placeholder, value, onChange }) =
         <td>
             <textarea
                 ref={textareaRef}
-                value={value}
+                value={value ?? ''} // Utilisation d'une chaîne vide si la valeur est null
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
                 style={{
