@@ -9,6 +9,7 @@ import ProfilePage from './components/Profile/ProfilePage';
 import ProductListPage from './components/Product/ProductListPage';
 import { ProductProvider } from './context/ProductContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import ProductDetailsPage from './components/Product/ProductDetailsPage';
 
 const darkTheme = createTheme({
     palette: {
@@ -50,6 +51,7 @@ const App: React.FC = () => {
                     <Route element={<AppLayout />}>
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/products" element={<ProductListPage />} />
+                        <Route path="/products/:productId" element={<ProductDetailsPage />} />
                         {/* Route dynamique pour afficher les matrices de risque associées à un produit */}
                         <Route path="/products/:productId/risk-matrix" element={<MatrixWrapper />} />
                         <Route path="/profile" element={<ProfilePage />} />

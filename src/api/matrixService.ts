@@ -48,11 +48,11 @@ export const fetchMatrixRows = async (productId: string): Promise<MatrixRow[]> =
 };
 
 // Ajouter une ligne à la matrice
-export const addMatrixRow = async (row: Partial<MatrixRow>, productId: string): Promise<void> => {
+export const addMatrixRow = async (row: Partial<MatrixRow>, productId: string): Promise<MatrixRow | null> => {
     const user = await getCurrentUser();
-    if (!user) return;
+    if (!user) return null;
 
-    const { error } = await supabase
+    const { data, error } = await supabase
         .from('risk_matrix')
         .insert([
             {
@@ -60,11 +60,16 @@ export const addMatrixRow = async (row: Partial<MatrixRow>, productId: string): 
                 user_id: user.id,
                 product_id: productId, // Associer la ligne au produit
             },
-        ]);
+        ])
+        .select()
+        .single(); // Utiliser single() pour récupérer l'élément ajouté
 
     if (error) {
         console.error('Error adding matrix row:', error);
+        return null;
     }
+
+    return data;
 };
 
 

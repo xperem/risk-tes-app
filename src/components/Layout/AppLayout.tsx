@@ -71,7 +71,7 @@ const AppLayout: React.FC = () => {
                                     <ListItemText inset primary="View All Products" />
                                 </ListItemButton>
                                 {products.map((product) => (
-                                    <ListItemButton key={product.id} component={RouterLink} to={`/products/${product.id}/risk-matrix`}>
+                                    <ListItemButton key={product.id} component={RouterLink} to={`/products/${product.id}`}>
                                         <ListItemText inset primary={product.name} />
                                     </ListItemButton>
                                 ))}

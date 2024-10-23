@@ -84,7 +84,24 @@ export const addRiskMatrixForProduct = async (productId: string): Promise<void> 
 };
 
 // Fonction pour supprimer un produit
+// Fonction pour supprimer toutes les matrices de risques associées à un produit
+const deleteRiskMatricesForProduct = async (productId: string): Promise<void> => {
+    const { error } = await supabase
+        .from('risk_matrix')
+        .delete()
+        .eq('product_id', productId);
+
+    if (error) {
+        console.error('Error deleting risk matrices for product:', error);
+    }
+};
+
+// Fonction pour supprimer un produit et ses matrices associées
 export const deleteProduct = async (productId: string): Promise<void> => {
+    // Supprimer toutes les matrices de risques associées
+    await deleteRiskMatricesForProduct(productId);
+
+    // Ensuite, supprimer le produit
     const { error } = await supabase
         .from('products')
         .delete()

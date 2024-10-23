@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, TextField, Button, Typography } from '@mui/material';
 import { addProduct, addRiskMatrixForProduct } from '../../api/productService';
+import { useNavigate } from 'react-router-dom';
 
 interface AddProductModalProps {
     open: boolean;
@@ -9,6 +10,7 @@ interface AddProductModalProps {
 }
 
 const AddProductModal: React.FC<AddProductModalProps> = ({ open, onClose, onProductAdded }) => {
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -34,6 +36,8 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ open, onClose, onProd
 
         // Notifie le parent qu'un produit a été ajouté
         onProductAdded();
+
+        navigate(`/products/${product.id}`);
         // Ferme le modal
         onClose();
     };

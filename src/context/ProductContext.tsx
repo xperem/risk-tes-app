@@ -1,4 +1,3 @@
-// src/context/ProductContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { fetchProducts, addProduct } from '../api/productService';
 import { Product } from '../api/productService';
