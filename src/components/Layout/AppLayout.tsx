@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, CssBaseline, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Collapse, Toolbar, AppBar, Typography, Button } from '@mui/material';
 import { ExpandLess, ExpandMore, Dashboard, Category, Person } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -7,14 +7,9 @@ import { useProductContext } from '../../context/ProductContext';
 import { supabase } from '../../api/supabaseClient';
 
 const AppLayout: React.FC = () => {
-    const { products, refreshProducts } = useProductContext();
+    const { products } = useProductContext();
     const [openProducts, setOpenProducts] = useState(true);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        // Rafraîchir les produits uniquement au montage du composant
-        refreshProducts();
-    }, []); // Dépendances vides pour exécuter l'effet une seule fois
 
     const handleLogout = async () => {
         await supabase.auth.signOut();

@@ -37,10 +37,13 @@ const MatrixTable: React.FC<MatrixTableProps> = ({ rows, handleUpdateRow, handle
                         <TableCell sx={{ color: '#ffffff' }}>Situation</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Probability</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Severity</TableCell>
+                        <TableCell sx={{ color: '#ffffff' }}>Risk</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Mitigation</TableCell>
+                        <TableCell sx={{ color: '#ffffff' }}>New risk?</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Evidence</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Residual Probability</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Residual Severity</TableCell>
+                        <TableCell sx={{ color: '#ffffff' }}>Residual Risk</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Acceptability</TableCell>
                         <TableCell sx={{ color: '#ffffff' }}>Actions</TableCell>
                     </TableRow>

@@ -1,8 +1,6 @@
-// src/components/Product/AddProductModalContainer.tsx
 import React, { useState } from 'react';
-import { addProduct, addRiskMatrixForProduct } from '../../api/productService';
+import { useProductContext } from '../../context/ProductContext';
 import AddProductModal from './AddProductModal';
-
 
 interface AddProductModalContainerProps {
     open: boolean;
@@ -13,7 +11,7 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
-  
+    const { addNewProduct } = useProductContext(); // Utilisation du contexte
 
     const handleAddProduct = async () => {
         setError(null);
@@ -23,23 +21,22 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
         }
 
         try {
-            // Ajoute le produit via l'API
-            const product = await addProduct(name, description);
-            if (!product) {
-                setError('Error adding product.');
-                return;
-            }
+            // Ajoute le produit via l'API et mets à jour le contexte
+            await addNewProduct(name, description);
 
-            // Ajoute une matrice de risque associée au produit
-            await addRiskMatrixForProduct(product.id);
+            // Reset les champs après ajout
+            setName('');
+            setDescription('');
 
-            // Ajoute le produit au contexte sans faire un nouvel appel API
-            
-
-            // Appelle la fonction de fermeture de la modal
+            // Ferme la modal après l'ajout
             onClose();
-        } catch (error) {
-            setError('Error adding product.');
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error('Error adding product:', err.message);
+                setError('Error adding product. Please try again.');
+            } else {
+                setError('An unexpected error occurred.');
+            }
         }
     };
 
