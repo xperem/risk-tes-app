@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 import { addProduct, addRiskMatrixForProduct } from '../../api/productService';
 import AddProductModal from './AddProductModal';
 
+
 interface AddProductModalContainerProps {
     open: boolean;
     onClose: () => void;
-    onProductAdded: () => void;
 }
 
-const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ open, onClose, onProductAdded }) => {
+const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ open, onClose }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
+  
 
     const handleAddProduct = async () => {
         setError(null);
@@ -21,15 +22,25 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
             return;
         }
 
-        const product = await addProduct(name, description);
-        if (!product) {
-            setError('Error adding product.');
-            return;
-        }
+        try {
+            // Ajoute le produit via l'API
+            const product = await addProduct(name, description);
+            if (!product) {
+                setError('Error adding product.');
+                return;
+            }
 
-        await addRiskMatrixForProduct(product.id);
-        onProductAdded();
-        onClose();
+            // Ajoute une matrice de risque associée au produit
+            await addRiskMatrixForProduct(product.id);
+
+            // Ajoute le produit au contexte sans faire un nouvel appel API
+            
+
+            // Appelle la fonction de fermeture de la modal
+            onClose();
+        } catch (error) {
+            setError('Error adding product.');
+        }
     };
 
     return (

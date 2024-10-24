@@ -1,4 +1,4 @@
-// src/components/MatrixRow.tsx
+// src/components/RiskMatrix/MatrixRow.tsx
 import React from 'react';
 import ProbabilityField from './MatrixField/ProbabilityField';
 import SeverityField from './MatrixField/SeverityField';
@@ -6,7 +6,7 @@ import RiskField from './MatrixField/RiskField';
 import TextField from './MatrixField/TextField';
 import NewRiskField from './MatrixField/NewRiskField';
 import AcceptabilityField from './MatrixField/AcceptabilityField';
-import { MatrixRow as MatrixRowType } from '../../api/matrixService';
+import { MatrixRow as MatrixRowType } from '../../types/MatrixRow';
 
 interface MatrixRowProps {
     row: MatrixRowType;

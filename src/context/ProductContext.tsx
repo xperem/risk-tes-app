@@ -31,6 +31,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
+
     const refreshProducts = useCallback(() => {
         loadProducts();
     }, [loadProducts]);
