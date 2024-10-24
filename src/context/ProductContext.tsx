@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { fetchProducts, addProduct } from '../api/productService';
 import { Product } from '../api/productService';
 
@@ -13,16 +13,16 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [products, setProducts] = useState<Product[]>([]);
 
-    const loadProducts = async () => {
+    const loadProducts = useCallback(async () => {
         const fetchedProducts = await fetchProducts();
         if (fetchedProducts) {
             setProducts(fetchedProducts);
         }
-    };
+    }, []); // Utilisation de useCallback pour mémoïser
 
     useEffect(() => {
         loadProducts();
-    }, []);
+    }, [loadProducts]);
 
     const addNewProduct = async (name: string, description: string) => {
         const newProduct = await addProduct(name, description);
@@ -31,9 +31,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
     };
 
-    const refreshProducts = () => {
+    const refreshProducts = useCallback(() => {
         loadProducts();
-    };
+    }, [loadProducts]);
 
     return (
         <ProductContext.Provider value={{ products, addNewProduct, refreshProducts }}>

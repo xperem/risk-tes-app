@@ -9,13 +9,12 @@ import { supabase } from '../../api/supabaseClient';
 const AppLayout: React.FC = () => {
     const { products, refreshProducts } = useProductContext();
     const [openProducts, setOpenProducts] = useState(true);
-
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Rafraîchir les produits lorsqu'un changement est détecté dans le contexte
+        // Rafraîchir les produits uniquement au montage du composant
         refreshProducts();
-    }, [refreshProducts]);
+    }, []); // Dépendances vides pour exécuter l'effet une seule fois
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
