@@ -13,24 +13,37 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [products, setProducts] = useState<Product[]>([]);
 
+    // Fonction pour charger les produits depuis l'API
     const loadProducts = useCallback(async () => {
-        const fetchedProducts = await fetchProducts();
-        if (fetchedProducts) {
-            setProducts(fetchedProducts);
+        try {
+            const fetchedProducts = await fetchProducts();
+            if (fetchedProducts) {
+                setProducts(fetchedProducts);
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
         }
-    }, []); // Utilisation de useCallback pour mémoïser
+    }, []);
 
+    // Charger les produits lors du montage du composant
     useEffect(() => {
         loadProducts();
     }, [loadProducts]);
 
-    const addNewProduct = async (name: string, description: string) => {
-        const newProduct = await addProduct(name, description);
-        if (newProduct) {
-            setProducts((prevProducts) => [...prevProducts, newProduct]);
+    // Ajouter un nouveau produit et mettre à jour l'état local
+    const addNewProduct = useCallback(async (name: string, description: string) => {
+        try {
+            const newProduct = await addProduct(name, description);
+            console.log('New product added:', newProduct);
+            if (newProduct) {
+                setProducts((prevProducts) => [...prevProducts, newProduct]);
+            }
+        } catch (error) {
+            console.error('Error adding product:', error);
         }
-    };
+    }, []);
 
+    // Rafraîchir les produits manuellement
     const refreshProducts = useCallback(() => {
         loadProducts();
     }, [loadProducts]);
@@ -42,9 +55,10 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
     );
 };
 
+// Hook personnalisé pour utiliser le contexte de produits
 export const useProductContext = () => {
     const context = useContext(ProductContext);
-    if (context === undefined) {
+    if (!context) {
         throw new Error('useProductContext must be used within a ProductProvider');
     }
     return context;

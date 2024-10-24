@@ -1,18 +1,17 @@
-// src/components/Product/AddProductModalContainer.tsx
 import React, { useState } from 'react';
-import { addProduct, addRiskMatrixForProduct } from '../../api/productService';
+import { useProductContext } from '../../context/ProductContext';
 import AddProductModal from './AddProductModal';
 
 interface AddProductModalContainerProps {
     open: boolean;
     onClose: () => void;
-    onProductAdded: () => void;
 }
 
-const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ open, onClose, onProductAdded }) => {
+const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ open, onClose }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const { addNewProduct } = useProductContext(); // Utilisation du contexte
 
     const handleAddProduct = async () => {
         setError(null);
@@ -21,15 +20,24 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
             return;
         }
 
-        const product = await addProduct(name, description);
-        if (!product) {
-            setError('Error adding product.');
-            return;
-        }
+        try {
+            // Ajoute le produit via l'API et mets à jour le contexte
+            await addNewProduct(name, description);
 
-        await addRiskMatrixForProduct(product.id);
-        onProductAdded();
-        onClose();
+            // Reset les champs après ajout
+            setName('');
+            setDescription('');
+
+            // Ferme la modal après l'ajout
+            onClose();
+        } catch (err) {
+            if (err instanceof Error) {
+                console.error('Error adding product:', err.message);
+                setError('Error adding product. Please try again.');
+            } else {
+                setError('An unexpected error occurred.');
+            }
+        }
     };
 
     return (

@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes, Navigate, useParams } from 'rea
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import AppLayout from './components/Layout/AppLayout';
-import Matrix from './components/RiskMatrix/Matrix';
 import Dashboard from './components/Dashboard/Dashboard';
 import ProfilePage from './components/Profile/ProfilePage';
 import ProductListContainer from './components/Product/ProductListContainer';
 import { ProductProvider } from './context/ProductContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProductDetailsContainer from './components/Product/ProductDetailsContainer';
+import RiskMatrixContainer from './components/RiskMatrix/RiskMatrixContainer';
 
 const darkTheme = createTheme({
     palette: {
@@ -30,7 +30,7 @@ const darkTheme = createTheme({
     },
 });
 
-// Wrapper for dynamic rendering of Matrix based on productId
+// Wrapper for dynamic rendering of RiskMatrixContainer based on productId
 const MatrixWrapper: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
 
@@ -38,7 +38,7 @@ const MatrixWrapper: React.FC = () => {
         return <div>Product ID is required</div>;
     }
 
-    return <Matrix productId={productId} />;
+    return <RiskMatrixContainer productId={productId} />;
 };
 
 const App: React.FC = () => {

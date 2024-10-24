@@ -1,7 +1,8 @@
+// src/components/RiskMatrix/StatisticsModal.tsx
 import React from 'react';
 import { Dialog, DialogContent, DialogTitle, DialogActions, Button } from '@mui/material';
 import MatrixStatistics from './MatrixStatistics';
-import { MatrixRow as MatrixRowType } from '../../api/matrixService';
+import { MatrixRow as MatrixRowType } from '../../types/MatrixRow';
 
 interface StatisticsModalProps {
     isOpen: boolean;
@@ -12,7 +13,7 @@ interface StatisticsModalProps {
 const StatisticsModal: React.FC<StatisticsModalProps> = ({ isOpen, onClose, rows }) => {
     return (
         <Dialog
-            open={isOpen}
+            open={isOpen} // Assurez-vous que la prop est utilisée ici
             onClose={onClose}
             maxWidth="sm"
             fullWidth

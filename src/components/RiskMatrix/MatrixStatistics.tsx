@@ -1,6 +1,6 @@
 // src/components/MatrixStatistics.tsx
 import React from 'react';
-import { MatrixRow as MatrixRowType } from '../../api/matrixService';
+import { MatrixRow as MatrixRowType } from '../../types/MatrixRow';
 import { Box, Typography } from '@mui/material';
 
 interface MatrixStatisticsProps {

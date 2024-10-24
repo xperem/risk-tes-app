@@ -59,6 +59,8 @@ export const addProduct = async (name: string, description: string): Promise<Pro
         return null;
     }
 
+   
+
     return data;
 };
 
