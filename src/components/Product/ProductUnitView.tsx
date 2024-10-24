@@ -1,5 +1,4 @@
 // src/components/Product/ProductUnitView.tsx
-
 import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, Typography, Button, IconButton } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material';
@@ -9,7 +8,7 @@ interface ProductUnitViewProps {
     name: string;
     description: string;
     onDelete: (id: string) => void;
-    onViewDetails: (id: string) => void;
+    onViewDetails: (id: string) => void; // Assurez-vous que cette prop est définie ici
 }
 
 const ProductUnitView: React.FC<ProductUnitViewProps> = ({ id, name, description, onDelete, onViewDetails }) => {
@@ -30,7 +29,7 @@ const ProductUnitView: React.FC<ProductUnitViewProps> = ({ id, name, description
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={() => onViewDetails(id)}>View Details</Button>
+                <Button size="small" onClick={() => onViewDetails(id)}>View Details</Button> {/* Assurez-vous que cette ligne appelle bien la fonction */}
                 <IconButton
                     aria-label="delete"
                     onClick={() => onDelete(id)}
