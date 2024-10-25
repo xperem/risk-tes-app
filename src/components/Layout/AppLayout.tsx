@@ -3,7 +3,7 @@ import { Box, CssBaseline, Drawer, List, ListItemButton, ListItemIcon, ListItemT
 import { ExpandLess, ExpandMore, Dashboard, Category, Person } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import { useProductContext } from '../../context/ProductContext';
+import { useProductContext } from '../../context/useProductContext';
 import { supabase } from '../../api/supabaseClient';
 
 const AppLayout: React.FC = () => {

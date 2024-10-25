@@ -1,10 +1,9 @@
-// src/components/Product/ProductDetailsContainer.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProducts } from '../../api/productService';
+import { useProductContext } from '../../context/useProductContext';
 import ProductDetails from './ProductDetails';
 
-interface ProductDetails {
+interface ProductDetailsType { // Changement du nom pour éviter le conflit
     id: string;
     name: string;
     description: string;
@@ -12,25 +11,27 @@ interface ProductDetails {
 
 const ProductDetailsContainer: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
-    const [product, setProduct] = useState<ProductDetails | null>(null);
+    const { products, refreshProducts } = useProductContext();
+    const [product, setProduct] = useState<ProductDetailsType | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getProduct = async () => {
+        const findProduct = async () => {
             setLoading(true);
-            const products = await fetchProducts();
-            if (products) {
-                // Filtrer pour trouver le produit spécifique par ID
-                const fetchedProduct = products.find((p) => p.id === productId);
-                setProduct(fetchedProduct || null);
+
+            if (products.length === 0) {
+                await refreshProducts();
             }
+
+            const fetchedProduct = products.find((p) => p.id === productId);
+            setProduct(fetchedProduct || null);
             setLoading(false);
         };
 
         if (productId) {
-            getProduct();
+            findProduct();
         }
-    }, [productId]);
+    }, [productId, products, refreshProducts]);
 
     return (
         <ProductDetails

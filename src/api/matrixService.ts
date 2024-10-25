@@ -1,17 +1,9 @@
 // src/api/matrixService.ts
 import { supabase } from './supabaseClient';
 import { MatrixRow } from '../types/MatrixRow';
+import { getCurrentUser } from './utils'; 
 
 
-// Fonction pour récupérer l'utilisateur courant
-const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) {
-        console.error('Error fetching user:', error);
-        return null;
-    }
-    return data.user;
-};
 
 // Récupérer les lignes de la matrice pour l'utilisateur connecté
 export const fetchMatrixRows = async (productId: string): Promise<MatrixRow[]> => {

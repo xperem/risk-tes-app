@@ -1,13 +1,11 @@
-// src/components/Product/ProductListContainer.tsx
-import React, { useState, useEffect } from 'react';
-import { fetchProducts, deleteProduct, addProduct } from '../../api/productService';
-import { Product} from '../../types/Product';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useProductContext } from '../../context/useProductContext';// Utilise le contexte des produits
 import ProductList from './ProductList';
 import AddProductModal from './AddProductModal';
 import { useNavigate } from 'react-router-dom';
 
 const ProductListContainer: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const { products, refreshProducts, addNewProduct, deleteProduct } = useProductContext(); // Récupère les fonctions du contexte
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const [name, setName] = useState('');
@@ -15,20 +13,20 @@ const ProductListContainer: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
+    // Mémorisation de la fonction pour éviter de la recréer à chaque rendu
+    const fetchProductsList = useCallback(async () => {
+        setLoading(true);
+        await refreshProducts(); // Utilise la méthode du contexte pour actualiser les produits
+        setLoading(false);
+    }, [refreshProducts]);
+
     useEffect(() => {
         fetchProductsList();
-    }, []);
-
-    const fetchProductsList = async () => {
-        setLoading(true);
-        const data = await fetchProducts();
-        setProducts(data || []);
-        setLoading(false);
-    };
+    }, [fetchProductsList]); // Ajout de fetchProductsList comme dépendance
 
     const handleDeleteProduct = async (productId: string) => {
         await deleteProduct(productId);
-        fetchProductsList();
+        await refreshProducts(); // Rafraîchit les produits via le contexte
     };
 
     const handleOpenModal = () => {
@@ -42,10 +40,6 @@ const ProductListContainer: React.FC = () => {
         setError(null);
     };
 
-    const handleProductAdded = async () => {
-        await fetchProductsList();
-    };
-
     const handleAddProduct = async () => {
         setError(null);
         if (!name) {
@@ -53,18 +47,13 @@ const ProductListContainer: React.FC = () => {
             return;
         }
 
-        const product = await addProduct(name, description);
-        if (!product) {
-            setError('Error adding product.');
-            return;
-        }
-
-        await handleProductAdded();
+        await addNewProduct(name, description); // Utilise la méthode du contexte
+        await fetchProductsList(); // Rafraîchit les produits via le contexte
         handleCloseModal();
     };
 
     const handleNavigateToProduct = (productId: string) => {
-        navigate(`/products/${productId}`); // Utilisation de navigate pour rediriger vers la page de détails
+        navigate(`/products/${productId}`);
     };
 
     return (
@@ -74,7 +63,7 @@ const ProductListContainer: React.FC = () => {
                 loading={loading}
                 onDeleteProduct={handleDeleteProduct}
                 onOpenModal={handleOpenModal}
-                onViewDetails={handleNavigateToProduct} 
+                onViewDetails={handleNavigateToProduct}
             />
             <AddProductModal
                 open={modalOpen}
