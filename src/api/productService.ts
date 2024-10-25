@@ -2,7 +2,7 @@
 import { supabase } from './supabaseClient';
 import { Product} from '../types/Product';
 import { getCurrentUser } from './utils'; 
-
+import { deleteProductDescription } from './productDescriptionService';
 
 
 // Fonction pour récupérer tous les produits pour l'utilisateur connecté
@@ -87,6 +87,7 @@ const deleteRiskMatricesForProduct = async (productId: string): Promise<void> =>
 export const deleteProduct = async (productId: string): Promise<void> => {
     // Supprimer toutes les matrices de risques associées
     await deleteRiskMatricesForProduct(productId);
+    await deleteProductDescription(productId);
 
     // Ensuite, supprimer le produit
     const { error } = await supabase

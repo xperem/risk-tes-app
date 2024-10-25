@@ -10,6 +10,7 @@ import { ProductProvider } from './context/ProductContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ProductDetailsContainer from './components/Product/ProductDetailsContainer';
 import RiskMatrixContainer from './components/RiskMatrix/RiskMatrixContainer';
+import ProductDescriptionContainer from './components/ProductDescription/ProductDescriptionContainer'; 
 
 const darkTheme = createTheme({
     palette: {
@@ -54,6 +55,7 @@ const App: React.FC = () => {
                             <Route path="/products" element={<ProductListContainer />} />
                             <Route path="/products/:productId" element={<ProductDetailsContainer />} />
                             {/* Dynamic route for displaying risk matrix associated with a product */}
+                            <Route path="/products/:productId/description" element={<ProductDescriptionContainer />} />
                             <Route path="/products/:productId/risk-matrix" element={<MatrixWrapper />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/" element={<Navigate to="/dashboard" />} />
