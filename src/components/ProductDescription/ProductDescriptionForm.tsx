@@ -133,7 +133,78 @@ const ProductDescriptionForm: React.FC<ProductDescriptionFormProps> = ({ initial
                         checked={description.on_market}
                         onChange={handleCheckboxChange}
                     />
-                    {/* Repeat for other fields using TextFieldGroup */}
+                    <TextFieldGroup
+                        label="GMN"
+                        name="gmn"
+                        value={description.gmn}
+                        onChange={handleChange}
+                    />
+                    <TextFieldGroup
+                        label="GTIN"
+                        name="gtin"
+                        value={description.gtin}
+                        onChange={handleChange}
+                    />
+                    <TextFieldGroup
+                        label="Classification Code"
+                        name="classification_code"
+                        value={description.classification_code}
+                        onChange={handleChange}
+                    />
+                    <TextFieldGroup
+                        label="Intended Use"
+                        name="intended_use"
+                        value={description.intended_use}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
+                    <TextFieldGroup
+                        label="Intended User"
+                        name="intended_user"
+                        value={description.intended_user}
+                        onChange={handleChange}
+                    />
+                    <TextFieldGroup
+                        label="Operating Principle"
+                        name="operating_principle"
+                        value={description.operating_principle}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
+                    <TextFieldGroup
+                        label="Medical Indication"
+                        name="medical_indication"
+                        value={description.medical_indication}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
+                    <TextFieldGroup
+                        label="Contraindication"
+                        name="contraindication"
+                        value={description.contraindication}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
+                    <TextFieldGroup
+                        label="Performance Claims"
+                        name="performance_claims"
+                        value={description.performance_claims}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
+                    <TextFieldGroup
+                        label="Expected Benefit"
+                        name="expected_benefit"
+                        value={description.expected_benefit}
+                        onChange={handleChange}
+                        multiline
+                        rows={2}
+                    />
                     <Grid item xs={12}>
                         <Button type="submit" variant="contained" color="primary" fullWidth>
                             Save Description
