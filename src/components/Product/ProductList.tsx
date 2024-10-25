@@ -6,7 +6,6 @@ import ProductUnitView from './ProductUnitView';
 interface Product {
     id: string;
     name: string;
-    description: string;
 }
 
 interface ProductListProps {
@@ -38,7 +37,6 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading, onDeletePr
                         <ProductUnitView
                             id={product.id}
                             name={product.name}
-                            description={product.description}
                             onDelete={onDeleteProduct}
                             onViewDetails={() => onViewDetails(product.id)} // Utilisation correcte de la fonction
                         />

@@ -6,7 +6,6 @@ import ProductDetails from './ProductDetails';
 interface ProductDetailsType { // Changement du nom pour éviter le conflit
     id: string;
     name: string;
-    description: string;
 }
 
 const ProductDetailsContainer: React.FC = () => {

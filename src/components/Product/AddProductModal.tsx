@@ -7,8 +7,6 @@ interface AddProductModalProps {
     onClose: () => void;
     name: string;
     setName: (value: string) => void;
-    description: string;
-    setDescription: (value: string) => void;
     error: string | null;
     handleAddProduct: () => void;
 }
@@ -18,8 +16,6 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
     onClose,
     name,
     setName,
-    description,
-    setDescription,
     error,
     handleAddProduct
 }) => (
@@ -52,15 +48,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 onChange={(e) => setName(e.target.value)}
                 sx={{ marginBottom: 2 }}
             />
-            <TextField
-                label="Description"
-                fullWidth
-                multiline
-                rows={3}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                sx={{ marginBottom: 2 }}
-            />
+          
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
                 <Button variant="outlined" onClick={onClose}>
                     Cancel

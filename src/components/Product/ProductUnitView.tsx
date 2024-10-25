@@ -6,12 +6,11 @@ import { Delete as DeleteIcon } from '@mui/icons-material';
 interface ProductUnitViewProps {
     id: string;
     name: string;
-    description: string;
     onDelete: (id: string) => void;
     onViewDetails: (id: string) => void; // Assurez-vous que cette prop est définie ici
 }
 
-const ProductUnitView: React.FC<ProductUnitViewProps> = ({ id, name, description, onDelete, onViewDetails }) => {
+const ProductUnitView: React.FC<ProductUnitViewProps> = ({ id, name, onDelete, onViewDetails }) => {
     return (
         <Card sx={{ maxWidth: 345, backgroundColor: '#2a2a2a', color: '#ffffff' }}>
             <CardMedia
@@ -24,9 +23,7 @@ const ProductUnitView: React.FC<ProductUnitViewProps> = ({ id, name, description
                 <Typography gutterBottom variant="h5" component="div">
                     {name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {description}
-                </Typography>
+                
             </CardContent>
             <CardActions>
                 <Button size="small" onClick={() => onViewDetails(id)}>View Details</Button> {/* Assurez-vous que cette ligne appelle bien la fonction */}

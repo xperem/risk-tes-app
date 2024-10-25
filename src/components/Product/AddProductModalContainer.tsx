@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useProductContext } from '../../context/ProductContext';
+import { useProductContext } from '../../context/useProductContext';
 import AddProductModal from './AddProductModal';
 
 interface AddProductModalContainerProps {
@@ -9,7 +9,6 @@ interface AddProductModalContainerProps {
 
 const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ open, onClose }) => {
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
     const { addNewProduct } = useProductContext(); // Utilisation du contexte
 
@@ -22,11 +21,11 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
 
         try {
             // Ajoute le produit via l'API et mets à jour le contexte
-            await addNewProduct(name, description);
+            await addNewProduct(name);
 
             // Reset les champs après ajout
             setName('');
-            setDescription('');
+        
 
             // Ferme la modal après l'ajout
             onClose();
@@ -46,8 +45,6 @@ const AddProductModalContainer: React.FC<AddProductModalContainerProps> = ({ ope
             onClose={onClose}
             name={name}
             setName={setName}
-            description={description}
-            setDescription={setDescription}
             error={error}
             handleAddProduct={handleAddProduct}
         />

@@ -4,7 +4,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 interface ProductDetailsProps {
-    product: { id: string; name: string; description: string } | null;
+    product: { id: string; name: string; } | null;
     loading: boolean;
 }
 
@@ -22,9 +22,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, loading }) => 
             <Typography variant="h4" sx={{ color: '#ffffff', marginBottom: 2 }}>
                 {product.name}
             </Typography>
-            <Typography variant="body1" sx={{ color: '#cccccc', marginBottom: 4 }}>
-                {product.description}
-            </Typography>
+          
             <Button
                 variant="contained"
                 component={RouterLink}

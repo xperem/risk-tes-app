@@ -1,18 +1,9 @@
 // src/api/productService.ts
 import { supabase } from './supabaseClient';
 import { Product} from '../types/Product';
+import { getCurrentUser } from './utils'; 
 
 
-
-// Fonction pour récupérer l'utilisateur courant
-const getCurrentUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) {
-        console.error('Error fetching user:', error);
-        return null;
-    }
-    return data.user;
-};
 
 // Fonction pour récupérer tous les produits pour l'utilisateur connecté
 export const fetchProducts = async (): Promise<Product[] | null> => {
@@ -33,7 +24,7 @@ export const fetchProducts = async (): Promise<Product[] | null> => {
 };
 
 // Fonction pour ajouter un nouveau produit
-export const addProduct = async (name: string, description: string): Promise<Product | null> => {
+export const addProduct = async (name: string): Promise<Product | null> => {
     const user = await getCurrentUser();
     if (!user) return null;
 
@@ -42,7 +33,6 @@ export const addProduct = async (name: string, description: string): Promise<Pro
         .insert([
             {
                 name,
-                description,
                 user_id: user.id,
             },
         ])

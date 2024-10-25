@@ -4,7 +4,7 @@ import { Product } from '../types/Product';
 
 interface ProductContextType {
     products: Product[];
-    addNewProduct: (name: string, description: string) => Promise<void>;
+    addNewProduct: (name: string) => Promise<void>;
     deleteProduct: (id: string) => Promise<void>;
     refreshProducts: () => void;
 }
@@ -29,9 +29,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
         loadProducts();
     }, [loadProducts]);
 
-    const addNewProduct = useCallback(async (name: string, description: string) => {
+    const addNewProduct = useCallback(async (name: string) => {
         try {
-            const newProduct = await addProduct(name, description);
+            const newProduct = await addProduct(name);
             if (newProduct) {
                 setProducts((prevProducts) => [...prevProducts, newProduct]);
             }

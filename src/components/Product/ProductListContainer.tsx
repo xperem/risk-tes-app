@@ -9,7 +9,6 @@ const ProductListContainer: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -36,7 +35,6 @@ const ProductListContainer: React.FC = () => {
     const handleCloseModal = () => {
         setModalOpen(false);
         setName('');
-        setDescription('');
         setError(null);
     };
 
@@ -47,7 +45,7 @@ const ProductListContainer: React.FC = () => {
             return;
         }
 
-        await addNewProduct(name, description); // Utilise la méthode du contexte
+        await addNewProduct(name); // Utilise la méthode du contexte
         await fetchProductsList(); // Rafraîchit les produits via le contexte
         handleCloseModal();
     };
@@ -70,8 +68,6 @@ const ProductListContainer: React.FC = () => {
                 onClose={handleCloseModal}
                 name={name}
                 setName={setName}
-                description={description}
-                setDescription={setDescription}
                 error={error}
                 handleAddProduct={handleAddProduct}
             />
