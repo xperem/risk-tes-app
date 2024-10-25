@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { fetchProducts, addProduct } from '../api/productService';
-import { Product } from '../api/productService';
+import { Product} from '../types/Product';
 
 interface ProductContextType {
     products: Product[];

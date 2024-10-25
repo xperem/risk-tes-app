@@ -1,13 +1,8 @@
 // src/api/productService.ts
 import { supabase } from './supabaseClient';
+import { Product} from '../types/Product';
 
-export interface Product {
-    id: string;
-    name: string;
-    description: string;
-    user_id: string;
-    created_at: string;
-}
+
 
 // Fonction pour récupérer l'utilisateur courant
 const getCurrentUser = async () => {

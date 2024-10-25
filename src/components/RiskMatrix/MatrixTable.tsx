@@ -61,7 +61,7 @@ const MatrixTable: React.FC<MatrixTableProps> = ({ rows, handleUpdateRow, handle
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={12} align="center" sx={{ color: '#ffffff' }}>
+                            <TableCell colSpan={15} align="center" sx={{ color: '#ffffff' }}>
                                 No rows available
                             </TableCell>
                         </TableRow>

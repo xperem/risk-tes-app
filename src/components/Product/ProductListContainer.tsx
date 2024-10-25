@@ -1,6 +1,7 @@
 // src/components/Product/ProductListContainer.tsx
 import React, { useState, useEffect } from 'react';
-import { Product, fetchProducts, deleteProduct, addProduct } from '../../api/productService';
+import { fetchProducts, deleteProduct, addProduct } from '../../api/productService';
+import { Product} from '../../types/Product';
 import ProductList from './ProductList';
 import AddProductModal from './AddProductModal';
 import { useNavigate } from 'react-router-dom';
