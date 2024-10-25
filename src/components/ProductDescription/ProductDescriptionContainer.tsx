@@ -1,44 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProductDescription, addProductDescription, updateProductDescription } from '../../api/productDescriptionService';
 import ProductDescriptionForm from './ProductDescriptionForm';
+import useProductDescription from './useProductDescription';
 import { ProductDescription } from '../../types/ProductDescription';
 
 const ProductDescriptionContainer: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
-    const [description, setDescription] = useState<ProductDescription | null>(null);
 
-    useEffect(() => {
-        const getDescription = async () => {
-            if (productId) {
-                const fetchedDescription = await fetchProductDescription(productId);
-                setDescription(fetchedDescription);
-            }
-        };
+    // Vérifie que productId est défini avant d'utiliser le hook
+    const {
+        productDescription,
+        loading,
+        error,
+        createProductDescription,
+        updateDescription,
+    } = useProductDescription(productId || '');
 
-        getDescription();
-    }, [productId]);
-
-    const handleSave = async (newDescription: Omit<ProductDescription, 'id' | 'product_id'>) => {
-        if (productId) {
-            if (description) {
-                // Mise à jour de la description existante
-                await updateProductDescription(productId, newDescription);
-            } else {
-                // Création d'une nouvelle description
-                const createdDescription = await addProductDescription(productId, newDescription);
-                setDescription(createdDescription);
-            }
+    const handleSubmit = (data: Omit<ProductDescription, 'id' | 'product_id'>) => {
+        if (productDescription) {
+            updateDescription(data);
+        } else {
+            createProductDescription(data);
         }
     };
 
+    // Gestion des cas où productId est undefined
+    if (!productId) {
+        return <div>Error: Product ID is missing.</div>;
+    }
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
     return (
-        <div>
-            <ProductDescriptionForm
-                initialData={description ? { ...description } : undefined}
-                onSubmit={handleSave}
-            />
-        </div>
+        <ProductDescriptionForm
+            initialData={productDescription || undefined}
+            onSubmit={handleSubmit}
+        />
     );
 };
 
